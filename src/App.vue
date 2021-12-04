@@ -1,6 +1,13 @@
-<script setup lang="ts">
+<script lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+import Canvas from './components/Canvas.vue'
+export default {
+  components: {Canvas},
+  setup(){
+    return Canvas
+  },
+}
 </script>
 
 <template>
@@ -13,16 +20,14 @@
       <button class="rounded-r-xl" type="submit">Generate</button>
     </div>
   </div>
-  <section>
-    <canvas>
-
-    </canvas>
+  <section class="py-4">
+    <Canvas :tweet="{text:'yeah dude',color:'#27ae60'}"/>
   </section>
 </template>
 
 <style lang="scss">
   body {
-    @apply m-0 p-0 bg-gray-600;
+    @apply m-0 p-0 bg-gray-600 subpixel-antialiased;
   }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
