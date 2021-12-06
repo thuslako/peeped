@@ -13,7 +13,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
-    "axios": "^0.24.0",
     "node-scss": "^7.0.3",
     "sass": "^1.44.0",
     "scss": "^0.2.4",
