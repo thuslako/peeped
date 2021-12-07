@@ -19,14 +19,19 @@ export default defineComponent({
   },
   methods:{
      async fetchTweet(){
-      const result = await fetch(`/.netlify/functions/twitter/?id=1467199059614220290`)
-      const {data} = await result.json()
-      // const payload = await {text: data.text, user: '@unknown'}
-      this.payload = await {text: data.text, user: '@unknown'}
-    },
-    // getTweetId: ()=>{
-    //  "https://twitter.com/sheluvhec/status/1467199059614220290?s=20".match('/([^?s=\d]([^\/][\d]+))/g').split('/')[0]
-    // }
+      const result = await fetch(`/.netlify/functions/twitter/?id=${this.getTweetID(this.query)}`)
+      const {data,message} = await result.json()
+      if(data)this.payload = await {text: data.text, user: `@${this.getTweetUser(this.query)}`}
+      else this.payload = {text:message, user:"@error"}
+    }, 
+    getTweetUser(query:string){
+      const user = query.match(/([^/])\w+/g)
+      if(user) return user[3]
+    },   
+    getTweetID(query:string){
+     const id = query.match(/([^?s=\d]([^\/][\d]+))/g)
+     if(id)return id?.toString()?.split('/')[1]
+    }
   },
   watch:{
     query: 'fetchTweet'
@@ -40,7 +45,7 @@ export default defineComponent({
   </header>
   <div class="w-10/12 md:w-[45%] mt-10 mx-auto">
     <div class="w-full flex justify-between h-12">
-      <input type="search" class="w-full rounded-l-xl bg-green-50 border-2 border-green-400  px-4 text-xl text-green-800 focus:ring-4 focus:ring-green-100 focus:ing-opacity-50" name="URI" id="">
+      <input type="search" v-model="query" class="w-full rounded-l-xl bg-green-50 border-2 border-green-400  px-4 text-xl text-green-800 focus:ring-4 focus:ring-green-100 focus:ing-opacity-50" name="URI" id="">
       <button  class="rounded-r-xl border-2 bg-green-400 text-green-900" @click="fetchTweet" type="submit">Generate</button>
     </div>
   </div>
