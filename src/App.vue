@@ -20,13 +20,13 @@ export default defineComponent({
   methods:{
      async fetchTweet(){
       const result = await fetch(`/.netlify/functions/twitter/?id=${this.getTweetID(this.query)}`)
-      const {data,message} = await result.json()
-      if(data)this.payload = await {text: data.text, user: `@${this.getTweetUser(this.query)}`}
-      else this.payload = {text:message, user:"@error"}
+      const {data} = await result.json()
+      this.payload = await {text: data.text, user: `@${this.getTweetUser(this.query)}`}
     }, 
     getTweetUser(query:string){
       const user = query.match(/([^/])\w+/g)
-      if(user) return user[3]
+      if(user[3]) return user[3]
+      else return 'unknown'
     },   
     getTweetID(query:string){
      const id = query.match(/([^?s=\d]([^\/][\d]+))/g)

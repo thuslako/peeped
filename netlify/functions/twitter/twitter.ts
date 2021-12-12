@@ -11,6 +11,14 @@ const handler : Handler = async (event,context) =>{
       'Authorization': `Bearer ${process.env.TWITTER_TOKEN}`,
     }
   })
+
+  if(!result.ok){
+    return {
+      statusCode: 400,
+      body: JSON.stringify({data:{text:'couldn\'t find a tweet from provided URL, try again'}})
+    }
+  }
+
   const  {data,errors} = await result.json()
   if(data){
     return {
@@ -18,11 +26,8 @@ const handler : Handler = async (event,context) =>{
       body: JSON.stringify({data})
     }
   }
-  else{
-    return {
-      statusCode: 400,
-      body: JSON.stringify(errors[0])
-    }
+  if(errors){
+    console.table(errors)
   }
 }
 
