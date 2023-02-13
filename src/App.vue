@@ -20,7 +20,8 @@ export default defineComponent({
   methods: {
     async fetchTweet() {
       const result = await fetch(`/.netlify/functions/twitter/?id=${this.getTweetID(this.query)}`)
-      const { data } = await result.json()
+      const { data, includes } = await result.json()
+      console.log(includes)
       this.payload = await { text: data.text, user: `@${this.getTweetUser(this.query)}` }
     },
     getTweetUser(query: string) {
