@@ -4,6 +4,36 @@
 import { defineComponent } from 'vue'
 import Peeped from './components/Peeped.vue'
 
+interface Tweet {
+  "data": {
+    "attachments": {
+      "media_keys": Array<string>
+    },
+    "author_id": string,
+    "edit_history_tweet_ids": Array<string>,
+    "id": string,
+    "text": string
+  },
+  "includes": {
+    "media": [
+      {
+        "width": number,
+        "height": number,
+        "media_key": string,
+        "type": string,
+        "url": string
+      }
+    ],
+    "users": [
+      {
+        "id": string,
+        "name": string,
+        "username": string
+      }
+    ]
+  }
+}
+
 export default defineComponent({
   components: {
     Peeped
@@ -19,10 +49,9 @@ export default defineComponent({
   },
   methods: {
     async fetchTweet() {
-      const result = await fetch(`/.netlify/functions/twitter/?id=${this.getTweetID(this.query)}`)
-      const { data, includes } = await result.json()
-      console.log(includes)
-      this.payload = await { text: data.text, user: `@${this.getTweetUser(this.query)}` }
+      const result = await fetch(`/.netlify/functions/twitter?id=${this.getTweetID(this.query)}`)
+      const { data, includes }: Tweet = await result.json()
+      this.payload = await { text: data.text, user: `@${this.getTweetUser(this.query)}`, ...includes }
     },
     getTweetUser(query: string) {
       const user = query.match(/([^/])\w+/g)
@@ -47,7 +76,7 @@ export default defineComponent({
   <div class="w-10/12 md:w-[45%] mt-10 mx-auto">
     <div class="w-full flex justify-between h-12">
       <input type="search" v-model="query"
-        class="w-full rounded-l-xl bg-green-50 border-2 border-green-400  px-4 text-xl text-green-800 focus:ring-4 focus:ring-green-100 focus:ing-opacity-50"
+        class="w-full rounded-l-xl bg-green-50  border-2 border-green-400  px-4 text-xl text-green-800 focus:ring-4 focus:ring-green-100 focus:ing-opacity-50"
         name="URI" id="">
       <button class="rounded-r-xl border-2 bg-green-400 text-green-900" @click="fetchTweet"
         type="submit">Generate</button>
