@@ -51,7 +51,8 @@ export default defineComponent({
     async fetchTweet() {
       const result = await fetch(`/.netlify/functions/twitter?id=${this.getTweetID(this.query)}`)
       const { data, includes }: Tweet = await result.json()
-      this.payload = await { text: data.text, user: `@${this.getTweetUser(this.query)}`, ...includes }
+      const text = data.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '')
+      this.payload = await { text: text, user: `@${this.getTweetUser(this.query)}`, ...includes }
     },
     getTweetUser(query: string) {
       const user = query.match(/([^/])\w+/g)
