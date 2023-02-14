@@ -29,7 +29,7 @@ const context = ref<HTMLElement | null>(null)
       <section id="tweet"
         class="w-full h-[80%] bg-opacity-50 bg-black flex flex-col justify-center align-middle text-center text-[24pt] overflow-hidden">
         <img :src="tweet.includes?.media[0].url" class="block relative -z-1 w-[100%] h-auto object-cover" />
-        <div class="relative z-50">
+        <div class="absolute inset-0 z-50">
           <p v-html="tweet.text"></p>
         </div>
       </section>
