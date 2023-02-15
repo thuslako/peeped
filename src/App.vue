@@ -44,7 +44,7 @@ export default defineComponent({
   data() {
     return {
       query: "",
-      payload: { text: "Paste Tweet URL,then generating image!", user: "@thuslako" }
+      payload: { text: "Paste Tweet URL,then generating image!" }
     }
   },
   methods: {
@@ -52,12 +52,7 @@ export default defineComponent({
       const result = await fetch(`/.netlify/functions/twitter?id=${this.getTweetID(this.query)}`)
       const { data, includes }: Tweet = await result.json()
       const text = data.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '')
-      this.payload = await { text: text, user: `@${this.getTweetUser(this.query)}`, ...includes }
-    },
-    getTweetUser(query: string) {
-      const user = query.match(/([^/])\w+/g)
-      if (user?.length) return user[3]
-      else return 'unknown'
+      this.payload = await { text: text, ...includes }
     },
     getTweetID(query: string) {
       const id = query.match(/([^?s=\d]([^\/][\d]+))/g)
