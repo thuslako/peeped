@@ -70,11 +70,11 @@ export default defineComponent({
     <h1>Peeped</h1>
   </header>
   <div class="w-10/12 md:w-[45%] mt-10 mx-auto">
-    <div class="w-full flex justify-between h-12">
+    <div class="w-full flex justify-between h-12 focus:ring-4 focus:ring-green-100 focus:ing-opacity-50">
       <input type="search" v-model="query"
-        class="w-full rounded-l-xl bg-green-50  border-2 border-green-400  px-4 text-xl text-green-800 focus:ring-4 focus:ring-green-100 focus:ing-opacity-50"
+        class="w-full rounded-l-xl bg-green-50  border-2 border-solid border-green-400  px-4 text-xl text-green-800"
         name="URI" id="">
-      <button class="rounded-r-xl border-2 bg-green-400 text-green-900" @click="fetchTweet"
+      <button class="rounded-r-xl border-2 border-solid bg-green-400 text-green-900" @click="fetchTweet"
         type="submit">Generate</button>
     </div>
   </div>
