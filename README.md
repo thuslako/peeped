@@ -4,7 +4,7 @@ Application designed to style tweets that can then be used on instagram
 
 DEMO: [Peeped](https://peeped.netlify.app)
 
-TODO:
+## TODO:
 
 - Enable image generation
 - Improve input handling
@@ -12,7 +12,7 @@ TODO:
 - update styling
 - ~Handle image/video tweets~
 
--> built with:
+## built with:
 
 - vite
 - vue 3
@@ -21,7 +21,7 @@ TODO:
 - many js libraries
 - sleep..zzz
 
-## Build
+### Build
 
 - yarn install
 - (local testing) ntl dev
